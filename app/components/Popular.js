@@ -36,7 +36,8 @@ export default class Popular extends React.Component {
     super(props);
     this.state = {
       selectedLanguage: "All",
-      repos: null,
+      //we're going to make repos an object, each lang will be a key on object which will help us with caching
+      repos: {},
       error: null
     };
 
@@ -51,24 +52,34 @@ export default class Popular extends React.Component {
   updateLanguage(selectedLanguage) {
     this.setState({
       selectedLanguage: selectedLanguage,
-      error: null,
-      repos: null
+      error: null
     });
-    fetchPopularRepos(selectedLanguage)
-      .then(repos =>
-        this.setState({
-          repos,
-          error: null
+
+    //We only want to fetchPopularRepos IF this.state.repos @ the selectedLanguage is falsey or undefined
+    if (!this.state.repos[selectedLanguage]) {
+      fetchPopularRepos(selectedLanguage)
+        .then(data => {
+          //set data as property on repos object, update state of component based on prev state
+          //b/c we're updating the new repos based on the current repos, we pass a function to setState
+          //what we return from function is going to be merged w/ current state
+          this.setState(({ repos }) => ({
+            repos: {
+              ...repos,
+              [selectedLanguage]: data
+            }
+          }));
         })
-      )
-      .catch(() => {
-        console.warn("Error fetching repos", error);
-        this.setState({ error: "There was an error fetching the repos" });
-      });
+        .catch(() => {
+          console.warn("Error fetching repos", error);
+          this.setState({ error: "There was an error fetching the repos" });
+        });
+    }
   }
 
   isLoading() {
-    return this.state.repos === null && this.state.error === null;
+    const { selectedLanguage, repos, error } = this.state;
+    //if repos at selectedLanguage is falsey, (we haven't fetched repos yet ) our component will be loading & error is null
+    return !repos[selectedLanguage] && error === null;
   }
 
   render() {
@@ -82,7 +93,9 @@ export default class Popular extends React.Component {
 
         {this.isLoading() && <p>LOADING</p>}
         {error && <p>{error}</p>}
-        {repos && <pre>{JSON.stringify(repos, null, 2)}</pre>}
+        {repos[selectedLanguage] && (
+          <pre>{JSON.stringify(repos[selectedLanguage], null, 2)}</pre>
+        )}
       </>
     );
   }

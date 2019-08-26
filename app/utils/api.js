@@ -1,6 +1,7 @@
 const id = "YOUR_CLIENT_ID";
 const sec = "YOUR_SECRET_ID";
 const params = `?client_id=${id}&client_secret=${sec}`;
+/* */
 
 function getErrorMsg(message, username) {
   if (message === "Not Found") {
@@ -13,7 +14,10 @@ function getProfile(username) {
   return fetch(`https://api.github.com/users/${username}${params}`)
     .then(res => res.json())
     .then(profile => {
+      //profile is undefined
+      console.log(profile);
       if (profile.message) {
+        console.log('get profile err"');
         throw new Error(getErrorMsg(profile.message, username));
       }
       return profile;
@@ -27,9 +31,10 @@ function getRepos(username) {
     .then(res => res.json())
     .then(repos => {
       if (repos.message) {
-        //when you throw, it auto returns from function
+        //when you throw it auto returns
         throw new Error(getErrorMsg(repos.message, username));
       }
+
       return repos;
     });
 }
@@ -51,6 +56,7 @@ function calculateScore(followers, repos) {
 //When this resolves, our then function will be called and will be passed an array w first item in array being w/e resolves to
 //array destructuring & implicit return
 function getUserData(player) {
+  console.log("get uer data running");
   return Promise.all([getProfile(player), getRepos(player)]).then(
     ([profile, repos]) => ({
       profile,
@@ -64,6 +70,12 @@ function sortPlayers(players) {
 }
 
 //players is an array player 1 & 2
+// export function battle(players) {
+//   return Promise.all([getUserData(players[0]), getUserData(players[1])]).then(
+//     results => sortPlayers(results)
+//   );
+// }
+
 export function battle(players) {
   return Promise.all([getUserData(players[0]), getUserData(players[1])]).then(
     results => sortPlayers(results)

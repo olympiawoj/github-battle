@@ -53,7 +53,7 @@ function ReposGrid({ repos }) {
         const { login, avatar_url } = owner;
 
         return (
-          <li className="repo bg-light" key={html_url}>
+          <li className="card bg-light" key={html_url}>
             <h4 className="header-lg center-text">#{index + 1}</h4>
             <img
               className="avatar"
@@ -156,7 +156,16 @@ export default class Popular extends React.Component {
         />
 
         {this.isLoading() && <p>LOADING</p>}
-        {error && <p>{error}</p>}
+        {error && (
+          <p
+            className="
+        
+        center-text"
+            error
+          >
+            {error}
+          </p>
+        )}
         {repos[selectedLanguage] && (
           <ReposGrid repos={repos[selectedLanguage]} />
         )}

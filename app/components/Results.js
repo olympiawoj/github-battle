@@ -49,12 +49,12 @@ export default class Results extends React.Component {
     console.log("winner", winner);
     console.log("loser", loser);
 
-    if (loading) {
+    if (loading === true) {
       return <p>Loading</p>;
     }
 
     if (error) {
-      return <p className="center-text error">ERROR</p>;
+      return <p className="center-text error">{error}</p>;
     }
 
     return (
@@ -69,7 +69,7 @@ export default class Results extends React.Component {
             alt={`Avatar for ${winner.profile.login}`}
           />
           <h4 className="center-text">
-            Score: {winner.score.toLocateString()}
+            Score: {winner.score.toLocaleString()}
           </h4>
           <h2 className="center-text">
             <a className="link" href={winner.profile.html_url}>
@@ -78,34 +78,29 @@ export default class Results extends React.Component {
           </h2>
           <ul className="card-list">
             <li>
-              <FaUser color="rgb(239, 115, 115)" size={22}>
-                {winner.profile.name}
-              </FaUser>
+              <FaUser color="rgb(239, 115, 115)" size={22} />
+              {winner.profile.name}
             </li>
             {/* location and company are optional*/}
             {winner.profile.location && (
               <li>
-                <FaCompass color="rgb(144, 115, 255)" size={22}>
-                  {winner.profile.location}
-                </FaCompass>
+                <FaCompass color="rgb(144, 115, 255)" size={22} />
+                {winner.profile.location}
               </li>
             )}
             {winner.profile.company && (
               <li>
-                <FaBriefcase color="#795548" size={22}>
-                  {winner.profile.location}
-                </FaBriefcase>
+                <FaBriefcase color="#795548" size={22} />
+                {winner.profile.location}
               </li>
             )}
             <li>
-              <FaUsers color="rgb(129, 195, 245)" size={22}>
-                {winner.profile.followers.toLocateString()} followers
-              </FaUsers>
+              <FaUsers color="rgb(129, 195, 245)" size={22} />
+              {winner.profile.followers.toLocaleString()} followers
             </li>
             <li>
-              <FaUserFriends color="rgb(64, 183, 95)" size={22}>
-                {winner.profile.followers.toLocaleString()} following
-              </FaUserFriends>
+              <FaUserFriends color="rgb(64, 183, 95)" size={22} />
+              {winner.profile.followers.toLocaleString()} following
             </li>
           </ul>
         </div>
@@ -113,50 +108,46 @@ export default class Results extends React.Component {
           <h4 className="header-lg center-text">
             {winner.score === loser.score ? "Tie" : "Loser"}
           </h4>
-        </div>
-        <img
-          className="avatar"
-          src={loser.profile.avatar_url}
-          alt={`Avatar for ${loser.profile.login}`}
-        />
-        <h4 className="center-text">Score: {loser.score.toLocaleString()}</h4>
-        <h2 className="center-text">
-          <a className="link" href={loser.profile.html_url}>
-            {loser.profile.login}
-          </a>
-        </h2>
-        <ul className="card-list">
-          <li>
-            <FaUser color="rgb(239, 115, 115)" size={22}>
+
+          <img
+            className="avatar"
+            src={loser.profile.avatar_url}
+            alt={`Avatar for ${loser.profile.login}`}
+          />
+          <h4 className="center-text">Score: {loser.score.toLocaleString()}</h4>
+          <h2 className="center-text">
+            <a className="link" href={loser.profile.html_url}>
+              {loser.profile.login}
+            </a>
+          </h2>
+          <ul className="card-list">
+            <li>
+              <FaUser color="rgb(239, 115, 115)" size={22} />
               {loser.profile.name}
-            </FaUser>
-          </li>
-          {/* location and company are optional*/}
-          {loser.profile.location && (
-            <li>
-              <FaCompass color="rgb(144, 115, 255)" size={22}>
-                {loser.profile.location}
-              </FaCompass>
             </li>
-          )}
-          {loser.profile.company && (
-            <li>
-              <FaBriefcase color="#795548" size={22}>
+            {/* location and company are optional*/}
+            {loser.profile.location && (
+              <li>
+                <FaCompass color="rgb(144, 115, 255)" size={22} />
                 {loser.profile.location}
-              </FaBriefcase>
+              </li>
+            )}
+            {loser.profile.company && (
+              <li>
+                <FaBriefcase color="#795548" size={22} />
+                {loser.profile.location}
+              </li>
+            )}
+            <li>
+              <FaUsers color="rgb(129, 195, 245)" size={22} />
+              {loser.profile.followers.toLocaleString()} followers
             </li>
-          )}
-          <li>
-            <FaUsers color="rgb(129, 195, 245)" size={22}>
-              {loser.profile.followers.toLocateString()} followers
-            </FaUsers>
-          </li>
-          <li>
-            <FaUserFriends color="rgb(64, 183, 95)" size={22}>
-              {loser.profile.followers.toLocateString()} following
-            </FaUserFriends>
-          </li>
-        </ul>
+            <li>
+              <FaUserFriends color="rgb(64, 183, 95)" size={22} />
+              {loser.profile.followers.toLocaleString()} following
+            </li>
+          </ul>
+        </div>
       </div>
     );
   }

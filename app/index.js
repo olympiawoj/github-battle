@@ -4,6 +4,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import Popular from "./components/Popular";
+import Battle from "./components/Battle";
+import { ThemeProvider } from "./contexts/theme";
+import Nav from "./components/Nav";
 
 //Component
 //1) State
@@ -14,11 +17,30 @@ import Popular from "./components/Popular";
 //This is why we need Babel,  before we ship this to the browser, obvi the browser wouldn't understand HTML looking syntax inside Javascript syntax. Babel's whole job is to convert or compile this JSX code into code that lookks like React.createElement
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      theme: "light",
+      //toggle theme on object bc somewhere inside of our component tree we're going to need to invoke this, in order for us to consume toggleTheme method from component, we need to stick that as value
+      toggleTheme: () => {
+        this.setState(({ theme }) => ({
+          theme: theme === "light" ? "dark" : "light"
+        }));
+      }
+    };
+  }
   render() {
     return (
-      <div className={"container"}>
-        <Popular />
-      </div>
+      //value is theme
+      <ThemeProvider value={this.state}>
+        <div className={this.state.theme}>
+          <div className={"container"}>
+            <Nav />
+            <Popular />
+            {/* <Battle /> */}
+          </div>
+        </div>
+      </ThemeProvider>
     );
   }
 }

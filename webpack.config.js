@@ -11,7 +11,8 @@ module.exports = {
   //2) define the OUTPUT - where the bundle webpack creates is going to go, where to put the file
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "index_bundle.js"
+    filename: "index_bundle.js",
+    publicPath: "/"
   },
   //3 define the transforms
   module: {
@@ -25,5 +26,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "app/index.html"
     })
-  ]
+  ],
+  devServer: {
+    historyApiFallback: true
+  }
 };

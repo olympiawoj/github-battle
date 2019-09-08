@@ -36,8 +36,8 @@ class App extends React.Component {
         <div className={this.state.theme}>
           <div className={"container"}>
             <Nav />
-            {/* <Popular /> */}
-            <Battle />
+            <Popular />
+            {/* <Battle /> */}
           </div>
         </div>
       </ThemeProvider>

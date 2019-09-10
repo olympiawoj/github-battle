@@ -4,6 +4,7 @@
 const path = require("path");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   //1) define entry point of our application
@@ -26,7 +27,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "app/index.html"
-    })
+    }),
+    new CopyPlugin([{ from: "_redirects" }])
   ],
   devServer: {
     historyApiFallback: true

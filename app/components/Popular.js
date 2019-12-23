@@ -97,24 +97,18 @@ ReposGrid.propTypes = {
 };
 
 export default class Popular extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedLanguage: "All",
-      //we're going to make repos an object, each lang will be a key on object which will help us with caching
-      repos: {},
-      error: null
-    };
-
-    this.updateLanguage = this.updateLanguage.bind(this);
-    this.isLoading = this.isLoading.bind(this);
-  }
+  state = {
+    selectedLanguage: "All",
+    //we're going to make repos an object, each lang will be a key on object which will help us with caching
+    repos: {},
+    error: null
+  };
 
   componentDidMount() {
     this.updateLanguage(this.state.selectedLanguage);
   }
 
-  updateLanguage(selectedLanguage) {
+  updateLanguage = selectedLanguage => {
     this.setState({
       selectedLanguage: selectedLanguage,
       error: null
@@ -139,13 +133,13 @@ export default class Popular extends React.Component {
           this.setState({ error: "There was an error fetching the repos" });
         });
     }
-  }
+  };
 
-  isLoading() {
+  isLoading = () => {
     const { selectedLanguage, repos, error } = this.state;
     //if repos at selectedLanguage is falsey, (we haven't fetched repos yet ) our component will be loading & error is null
     return !repos[selectedLanguage] && error === null;
-  }
+  };
 
   render() {
     const { selectedLanguage, repos, error } = this.state;

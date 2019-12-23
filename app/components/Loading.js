@@ -15,12 +15,9 @@ const styles = {
 //bc we're updating UI, we need to have something on state
 //when we update state, it'll call re-render updating the UI
 export default class Loading extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      content: props.text
-    };
-  }
+  state = {
+    content: this.props.text
+  };
 
   componentDidMount() {
     const { speed, text } = this.props;

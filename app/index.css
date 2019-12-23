@@ -48,10 +48,17 @@ li {
   text-decoration: none;
   color: inherit;
 }
+.nav li {
+  margin-right: 10px;
+}
 
 .grid {
   display: flex;
   flex-wrap: wrap;
+}
+
+.space-between {
+  justify-content: space-between;
 }
 
 .space-around {
